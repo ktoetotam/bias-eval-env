@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bias-consistency"
+version = "0.1.0"
+description = "YES/NO bias consistency evaluation with K rollouts and LLM-based normalization"
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+authors = [{name = "Maria Sukhareva"}]
+dependencies = ["verifiers"]  # add any others your env imports
+
+# IMPORTANT: do NOT use 'tags' here (setuptools will error). Use keywords if you like:
+keywords = ["eval", "bias", "consistency", "yes-no"]
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.package-data]
+bias_consistency = ["data/*.json"]
