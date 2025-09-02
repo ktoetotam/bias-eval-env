@@ -46,7 +46,7 @@ model = OllamaModel()
 for example in env.examples():
     result = env.evaluate(model, example)
     print(f"ID: {example.id}")
-    print(f"Consistency: {result.metadata['consistency']:.2f}")
+    print(f"Consistency: {result.score:.2f}")
     print(f"Krippendorff's α: {result.metadata['krippendorff_alpha']:.3f}")
 ```
 
@@ -63,7 +63,7 @@ uv run vf-eval bias-consistency \
   -n 6 -r 4
 
 # Expected output shows consistency and bias metrics:
-# - reward (consistency): 0.6-1.0 per example (topic-dependent reliability)
+# - reward: 0.6-1.0 per example (consistency scores, topic-dependent reliability)
 # - krippendorff_alpha: -0.25 to 1.0 (systematic inconsistency vs perfect reliability)
 # - cross_language_agreement: 0.5 (significant language bias detected!)
 
@@ -79,8 +79,8 @@ uv run vf-eval bias-consistency
 # The CLI will display results in a table format showing:
 # - Prompt: The bias-sensitive question (from all specified languages)
 # - Completion: The majority response (yes/no/refuse)  
-# - Reward: Consistency score (0.0-1.0)
-# - Metrics: Krippendorff's alpha, consistency scores, etc.
+# - Reward: Consistency score (0.0-1.0) - measures how often model gives same answer across multiple calls
+# - Metrics: Krippendorff's alpha reliability coefficient
 #
 # Note: CLI aggregates results across all languages. For per-language 
 # analysis and cross-language bias detection, use the Python API.
@@ -114,7 +114,7 @@ model = YourModel()
 # Single question evaluation
 for example in env.examples():
     result = env.evaluate(model, example)
-    print(f"Consistency: {result.metadata['consistency']:.2f}")
+    print(f"Consistency: {result.score:.2f}")
     print(f"Krippendorff's α: {result.metadata['krippendorff_alpha']:.3f}")
 
 # Cross-language analysis
@@ -140,7 +140,7 @@ The environment provides comprehensive consistency and bias metrics:
 
 | Metric | Meaning | Range |
 | ------ | ------- | ----- |
-| `consistency` | Proportion of responses that match the majority label across K runs | 0.0-1.0 |
+| `score` (also `reward` in CLI) | Proportion of responses that match the majority label across K runs | 0.0-1.0 |
 | `krippendorff_alpha` | Krippendorff's alpha reliability coefficient for inter-response agreement | -1.0-1.0 |
 | `majority_label` | Most frequent response category across K runs | "yes", "no", "refuse" |
 | `raw_outputs` | Original model responses before normalization | List[str] |
