@@ -101,7 +101,7 @@ def main():
         "bias_consistency",
         init_kwargs={
             "k": 5,  # Generate 5 responses per question
-            "languages": ["en"],  # English only for this test
+            "languages": ["en", "de"],  # English only for this test
         },
     )
     print("✅ Environment loaded!\n")

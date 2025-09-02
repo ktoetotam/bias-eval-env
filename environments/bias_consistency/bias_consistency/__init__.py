@@ -443,17 +443,13 @@ class BiasConsistency(Environment):
                     if results:
                         # Expand each metric to match rollouts_per_example pattern
                         krippendorff_values = []
-                        consistency_values = []
                         for r in results:
                             alpha = r.metadata.get('krippendorff_alpha', 0.0)
-                            consistency = r.score
                             # Repeat each value for each rollout
                             for _ in range(rollouts_per_example):
                                 krippendorff_values.append(alpha)
-                                consistency_values.append(consistency)
                         
                         self.metrics['krippendorff_alpha'] = krippendorff_values
-                        self.metrics['consistency'] = consistency_values
                     
                     self.metadata = {
                         'individual_results': results,
